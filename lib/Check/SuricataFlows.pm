@@ -90,7 +90,7 @@ sub new {
 	}
 
 	if ( !defined( $opts{alert_count} ) ) {
-		$opts{alert_count} = 500;
+		$opts{alert_count} = 1;
 	} elsif ( ref( $opts{alert_count} ) ne '' ) {
 		die( '$opts{alert_count} of ref type "' . ref( $opts{alert_count} ) . '" and not ""' );
 	} elsif ( !looks_like_number( $opts{alert_count} ) ) {
@@ -231,14 +231,20 @@ sub run {
 
 	if ( $to_return->{bi_directional_count} <= $self->{alert_count} ) {
 		$to_return->{status}
-			= 'bi directional count of '
+			= 'ALERT: bi directional count of '
 			. $to_return->{bi_directional_count}
 			. ' is less than '
 			. $self->{alert_count} . "\n";
 		$to_return->{status_code} = 2;
 	} elsif ( $to_return->{bi_directional_count} <= $self->{warn_count} ) {
+		$to_return->{status}
+			= 'WARN: bi directional count of '
+			. $to_return->{bi_directional_count}
+			. ' is less than '
+			. $self->{warn_count} . "\n";
 		$to_return->{status_code} = 1;
 	} else {
+		$to_return->{status}      = 'OK: bi directional count of ' . $to_return->{bi_directional_count} . "\n";
 		$to_return->{status_code} = 0;
 	}
 

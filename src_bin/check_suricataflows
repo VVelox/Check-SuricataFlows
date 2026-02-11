@@ -107,7 +107,7 @@ if ($@) {
 }
 
 my $results;
-eval { $flow_checker->run; };
+eval { $results = $flow_checker->run; };
 if ($@) {
 	print 'Failed to call $flow_checker->run... ' . $@ . "\n";
 	exit 3;
