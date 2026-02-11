@@ -21,7 +21,26 @@ check_suricataflows -v/--version
 
 =head1 DESCRIPTION
 
+This reads the Suricata EVE JSON flow data file.
 
+    .timestamp :: Used for double checking to make sure we don't read farther
+        back than we need to.
+
+If the following is found, the entry is checked.
+
+    .dest_ip
+    .src_ip
+    .flow.pkts_toclient
+    .flow.pkts_toserver
+
+Bi-directional is when .flow.pkts_toclient and .flow.pkts_toserver are both greater
+than zero.
+
+Uni-directional is when only .flow.pkts_toclient or .flow.pkts_toserver is greater
+than zero and the other is zero.
+
+If all entries found are uni-directional then it is safe to assume the monitored span
+is misconfigured.
 
 =head1 FLAGS
 

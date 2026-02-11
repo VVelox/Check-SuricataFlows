@@ -22,14 +22,56 @@ our $VERSION = '0.0.1';
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+This reads the Suricata EVE JSON flow data file.
 
-Perhaps a little code snippet.
+    .timestamp :: Used for double checking to make sure we don't read farther
+        back than we need to.
+
+If the following is found, the entry is checked.
+
+    .dest_ip
+    .src_ip
+    .flow.pkts_toclient
+    .flow.pkts_toserver
+
+Bi-directional is when .flow.pkts_toclient and .flow.pkts_toserver are both greater
+than zero.
+
+Uni-directional is when only .flow.pkts_toclient or .flow.pkts_toserver is greater
+than zero and the other is zero.
+
+If all entries found are uni-directional then it is safe to assume the monitored span
+is misconfigured.
+
+Example...
 
     use Check::SuricataFlows;
+    use Data::Dumper;
 
-    my $foo = Check::SuricataFlows->new();
-    ...
+    my $flow_checker;
+    eval {
+        $flow_checker = Check::SuricataFlows->new(
+            max_lines      => $max_lines,
+            read_back_time => $read_back_time,
+            warn_count     => $warn_count,
+            alert_count    => $alert_count,
+            flow_file      => $flow_file,
+        );
+    };
+    if ($@) {
+        print 'Failed to call Check::SuricataFlows->new... ' . $@ . "\n";
+        exit 3;
+    }
+
+    my $results;
+    eval { $results = $flow_checker->run; };
+    if ($@) {
+        print 'Failed to call $flow_checker->run... ' . $@ . "\n";
+        exit 3;
+    }
+
+    print $results->{status};
+    exit $results->{status_code};
 
 =head1 METHODS
 
@@ -53,6 +95,23 @@ Initiates the object.
 
     - flow_file :: The location json file containing the flow data.
           default :: /var/log/suricata/flows/current/flow.json
+
+Example...
+
+    my $flow_checker;
+    eval {
+        $flow_checker = Check::SuricataFlows->new(
+            max_lines      => $max_lines,
+            read_back_time => $read_back_time,
+            warn_count     => $warn_count,
+            alert_count    => $alert_count,
+            flow_file      => $flow_file,
+        );
+    };
+    if ($@) {
+        print 'Failed to call Check::SuricataFlows->new... ' . $@ . "\n";
+        exit 3;
+    }
 
 =cut
 
@@ -114,6 +173,41 @@ sub new {
 } ## end sub new
 
 =head2 run
+
+This method runs the check.
+
+Possible fatal errors such as the flow file not existing or being readable
+results in a status_code of 3 being set and a description set in status.
+
+This returns a hash ref. The keys are as below.
+
+    - status :: Status string for the results.
+
+    - status_code :: Nagios style int. 0=OK, 1=WARN, 2=ALERT, 3=UNKNOWN/ERROR
+
+    - lines_read :: Number of lines read.
+
+    - lines_parsed :: Number of lines successfully parsed.
+
+    - lines_get_errored :: Number of lines that resulted in fetch errors.
+
+    - lines_get_errors :: A array of strings of errors encountered when getting the next flow entry to process.
+
+    - bi_directional_count :: Count of bi-directional flows.
+
+    - uni_directional_count :: Count of uni-directional flows.
+
+Example...
+
+    my $results;
+    eval { $results = $flow_checker->run; };
+    if ($@) {
+        print 'Failed to call $flow_checker->run... ' . $@ . "\n";
+        exit 3;
+    }
+
+    print $results->{status};
+    exit $results->{status_code};
 
 =cut
 
