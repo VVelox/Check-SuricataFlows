@@ -46,12 +46,10 @@ Initiates the object.
         default :: 300
 
     - warn_count :: Warn if it is less then this for bidirectional traffic.
-        Note :: This value was arbitrarrily choosen. Adjust for your enviroment.
-        default :: 10
+        default :: 20
 
     - alert_count :: Alert if it is less than this for bidirectional traffic.
-        Note :: This value was arbitrarrily choosen. Adjust for your enviroment.
-        default :: 1
+        default :: 10
 
     - flow_file :: The location json file containing the flow data.
           default :: /var/log/suricata/flows/current/flow.json
@@ -82,7 +80,7 @@ sub new {
 	}
 
 	if ( !defined( $opts{warn_count} ) ) {
-		$opts{warn_count} = 10;
+		$opts{warn_count} = 20;
 	} elsif ( ref( $opts{warn_count} ) ne '' ) {
 		die( '$opts{warn_count} of ref type "' . ref( $opts{warn_count} ) . '" and not ""' );
 	} elsif ( !looks_like_number( $opts{warn_count} ) ) {
@@ -90,7 +88,7 @@ sub new {
 	}
 
 	if ( !defined( $opts{alert_count} ) ) {
-		$opts{alert_count} = 1;
+		$opts{alert_count} = 10;
 	} elsif ( ref( $opts{alert_count} ) ne '' ) {
 		die( '$opts{alert_count} of ref type "' . ref( $opts{alert_count} ) . '" and not ""' );
 	} elsif ( !looks_like_number( $opts{alert_count} ) ) {

@@ -35,13 +35,13 @@ Default: /var/log/suricata/flows/current/flow.json
 
 Alert if the number of bidirectional flows are less than this.
 
-Default: 1
+Default: 10
 
 =head2 -w <warn count>
 
 Warn if the number of directional flows are less than this.
 
-Default: 10
+Default: 20
 
 =head2 -t <seconds>
 
