@@ -13,7 +13,7 @@ check_sureicataflows - A Nagios style check to see if a Suricata flows EVE JSON 
 =head1 SYNOPSIS
 
 check_suricataflows [B<-f> <flows.json>] [B<-a> <alert count>] [B<-w> <warn count>]
-[B<-t> <seconds>] [<-m> <max lines>]
+[B<-t> <seconds>] [<-m> <max lines>] [B<-s> <sensor>]
 
 check_suricataflows -h/--help
 
@@ -72,6 +72,10 @@ Default: 300
 
 Max number of lines to read in.
 
+=head2 -s <sensor>
+
+Sensor names to check for.
+
 =cut
 
 sub version {
@@ -89,6 +93,7 @@ my $alert_count;
 my $warn_count;
 my $read_back_time;
 my $max_lines;
+my @sensor_names;
 GetOptions(
 	'version' => \$version,
 	'v'       => \$version,
@@ -99,6 +104,7 @@ GetOptions(
 	'w=i'     => \$warn_count,
 	's=i'     => \$read_back_time,
 	'm=i'     => \$max_lines,
+	's=s'     => \@sensor_names,
 );
 
 if ($help) {
@@ -118,6 +124,7 @@ eval {
 		warn_count     => $warn_count,
 		alert_count    => $alert_count,
 		flow_file      => $flow_file,
+		sensor_names   => \@sensor_names,
 	);
 };
 if ($@) {
