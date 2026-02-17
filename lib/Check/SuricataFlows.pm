@@ -14,11 +14,11 @@ Check::SuricataFlows - Make sure Suricata is seeing data via reading the Suricat
 
 =head1 VERSION
 
-Version 0.0.1
+Version 0.1.0
 
 =cut
 
-our $VERSION = '0.0.1';
+our $VERSION = '0.1.0';
 
 =head1 SYNOPSIS
 
@@ -42,6 +42,10 @@ than zero and the other is zero.
 
 If all entries found are uni-directional then it is safe to assume the monitored span
 is misconfigured.
+
+If sensor_names is used, then each of the specified sensors is checked for. It is
+checked from .host in the JSON and the variable for setting that in the Suricata config
+is .sensor-name .
 
 Example...
 
