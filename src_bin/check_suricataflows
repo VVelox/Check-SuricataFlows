@@ -102,7 +102,7 @@ GetOptions(
 	'f=s'     => \$flow_file,
 	'a=i'     => \$alert_count,
 	'w=i'     => \$warn_count,
-	's=i'     => \$read_back_time,
+	't=i'     => \$read_back_time,
 	'm=i'     => \$max_lines,
 	's=s'     => \@sensor_names,
 );
