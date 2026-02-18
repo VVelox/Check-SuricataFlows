@@ -515,7 +515,7 @@ sub run {
 	$to_return->{status}
 		= $to_return->{status} . 'seen sensors: ' . join( ', ', keys( %{ $to_return->{by_sensor} } ) ) . "\n";
 	$to_return->{status}
-		= $to_return->{status} . 'ignored IPs: ' . join( ', ', %{ $self->{ignore_IPs} } ) . "\n";
+		= $to_return->{status} . 'ignored IPs: ' . join( ', ', @{ $self->{ignore_IPs} } ) . "\n";
 	$to_return->{status} = $to_return->{status} . 'max lines to read: ' . $self->{max_lines} . "\n";
 	$to_return->{status} = $to_return->{status} . 'lines read: ' . $to_return->{lines_read} . "\n";
 	$to_return->{status} = $to_return->{status} . 'lines parsed: ' . $to_return->{lines_parsed} . "\n";
