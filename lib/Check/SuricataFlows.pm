@@ -277,6 +277,12 @@ This returns a hash ref. The keys are as below.
 
     - uni_directional_count :: Count of uni-directional flows.
 
+    - ip_ignored_lines :: Lines ignored thanks to src/dest IP.
+
+    - ip_parse_errored :: Lines in which the src/dest IP could not be parsed.
+
+    - ip_parse_errors :: Array containing error info on src/dest IP c parsing issues.
+
 Example...
 
     my $results;
