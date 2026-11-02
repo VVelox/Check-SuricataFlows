@@ -1,6 +1,6 @@
 Revision history for Check-SuricataFlows
 
-0.3.0   UNRELEASED
+0.3.0   2026-11-02/11:45
         - Add Monitoring::Sneck::Checks::suricata_flows, for running it in process from sneck as
           perl:suricata_flows. Monitoring::Sneck::Checks is needed if calling this inline from sneck
           is desired.
