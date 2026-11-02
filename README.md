@@ -81,6 +81,29 @@ you will most likely want to use this.
 
 An IP to ignore.
 
+# SNECK
+
+If [Monitoring::Sneck::Checks](https://github.com/VVelox/Monitoring-Sneck-Checks)
+is installed, this can also be run in process by
+[sneck](https://github.com/VVelox/Monitoring-Sneck) as `perl:suricata_flows`,
+or from the shell through `sneck_check`. Monitoring::Sneck::Checks is optional
+and not installed along with this.
+
+```
+suricata_flows|perl:suricata_flows -s sensor1 -s sensor2 -i 192.0.2.1
+```
+
+```
+sneck_check suricata_flows -f /var/log/suricata/flows/current/flow.json
+```
+
+It takes the same options as check_suricataflows, -f, -a, -w, -t, -m, -s,
+and -i, and works out the status the same way. The status line has the
+bi and uni directional counts and perfdata, followed by the same lines
+check_suricataflows prints.
+
+See `perldoc Monitoring::Sneck::Checks::suricata_flows`.
+
 # INSTALLATION
 
 ## FreeBSD
