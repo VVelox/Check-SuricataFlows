@@ -109,22 +109,25 @@ See `perldoc Monitoring::Sneck::Checks::suricata_flows`.
 ## FreeBSD
 
 ```
-pkg install p5-JSON p5-File-ReadBackwards p5-App-cpanminus
-cpanm Check::CheckSuricataFlows
+pkg install p5-JSON p5-File-ReadBackwards p5-NetAddr-IP p5-Regexp-IPv6 p5-App-cpanminus
+cpanm Check::SuricataFlows
 ```
 
 ## Debian
 
 ```
-apt-get install libjson-perl libfile-readbackwards-perl cpanminus
+apt-get install libjson-perl libfile-readbackwards-perl libnetaddr-ip-perl libregexp-ipv6-perl cpanminus
 cpanm Check::SuricataFlows
 ```
 
+cpanm installs anything not packaged, such as Regexp::IPv4.
+
 ## From Source
 
-To install this module, run the following commands:
+Install the dependencies, JSON, File::ReadBackwards, NetAddr::IP,
+Regexp::IPv4, and Regexp::IPv6, then run the following commands:
 
 	perl Makefile.PL
 	make
 	make test
-	make instal
+	make install
